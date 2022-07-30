@@ -2,7 +2,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import Header from "../components/layout/Header";
-import Product from "../components/Product";
+import Product from "../components/products/Product";
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -16,14 +16,13 @@ const Home: NextPage = () => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Header />
+
       <main className="w-full h-screen ml-auto mr-auto max-w-[1700px]">
         <div className="w-full h-3/4 relative  bg-cover bg-gradient-to-b from-transparent to-[#eaeded] -z-10">
           <Image
             src="https://m.media-amazon.com/images/I/61eJ7IegQGL._SX3000_.jpg"
             alt="banner"
             layout="fill"
-            object-fit="contain"
             className={styles.home_img}
           />
         </div>
@@ -34,12 +33,14 @@ const Home: NextPage = () => {
             img="https://upload.wikimedia.org/wikipedia/en/1/11/Lean_Startup.png"
             price={35.99}
             rating={4}
+            id={9234757}
           />
           <Product
             title="Villa-Lobos - Collected Works for Solo Guitar"
             img="https://images-na.ssl-images-amazon.com/images/I/519PVGGupNL._SX366_BO1,204,203,200_.jpg"
             price={79.99}
             rating={4}
+            id={9234757}
           />
         </div>
         <div className="flex justify-center ">
@@ -48,6 +49,7 @@ const Home: NextPage = () => {
             img="https://m.media-amazon.com/images/I/61aeen0K1NL._AC_SX679_.jpg"
             price={889.99}
             rating={4}
+            id={9234757}
           />
           <Product
             title="Bose SoundLink Mini II Bluetooth Speaker Special Edition, Black SE
@@ -55,6 +57,7 @@ const Home: NextPage = () => {
             img="https://m.media-amazon.com/images/I/71Tt8gMxVIL._AC_SX425_.jpg"
             price={249.99}
             rating={4}
+            id={9234757}
           />
           <Product
             title="Tranya Smart Watch, 1.69‘’ Full Touch Color Screen, 7-10 Days Battery Life, Android and iOS Compatible, 
@@ -62,6 +65,7 @@ const Home: NextPage = () => {
             img="https://m.media-amazon.com/images/I/717cD5lLAEL._AC_SX425_.jpg"
             price={119.99}
             rating={3}
+            id={9234757}
           />
         </div>
         <div className="flex justify-center ">
@@ -70,6 +74,7 @@ const Home: NextPage = () => {
             img="https://m.media-amazon.com/images/I/91ZWWg6tnOL._AC_SX679_.jpg"
             price={699.99}
             rating={4}
+            id={9234757}
           />
         </div>
       </main>
