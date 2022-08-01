@@ -1,15 +1,20 @@
+import { onAuthStateChanged, User } from "firebase/auth";
 import {
   createContext,
   Dispatch,
   ReactNode,
   Reducer,
   useContext,
+  useEffect,
   useReducer,
 } from "react";
-import { Action } from "../reducers/reducer";
+import { auth } from "../config/firebase.config";
+import { Action, ActionType } from "../reducers/reducer";
+import { Item } from "../ts/items";
 
 export interface State {
   cart: any[];
+  user: User | null;
 }
 
 export const StateContext = createContext<[State, Dispatch<Action>]>(
@@ -25,9 +30,26 @@ export const StateProvider = ({
 }) => {
   const initialState = {
     cart: [],
+    user: null,
   };
+
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      console.log("User >>>", user);
+      if (user) {
+        // User is signed in, see docs for a list of available properties
+        dispatch({ type: ActionType.SET_USER, user });
+      } else {
+        // User is signed out
+        dispatch({ type: ActionType.SET_USER, user: null });
+      }
+    });
+  }, []);
+
   return (
-    <StateContext.Provider value={useReducer(reducer, initialState)}>
+    <StateContext.Provider value={[state, dispatch]}>
       {children}
     </StateContext.Provider>
   );

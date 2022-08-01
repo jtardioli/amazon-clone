@@ -1,10 +1,23 @@
+import { Sign } from "crypto";
 import Image from "next/image";
 import Link from "next/link";
 import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { useStateValue } from "../../contexts/StateProvider";
+import { auth } from "../../config/firebase.config";
+import { signOut } from "firebase/auth";
 
 const Header = () => {
-  const [{ cart }] = useStateValue();
+  const [{ cart, user }] = useStateValue();
+
+  const handleAuth = async () => {
+    if (user) {
+      try {
+        await signOut(auth);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
   return (
     <header className="bg-[#131921] h-16 w-full flex items-center justify-between  px-5">
       <Link href="/">
@@ -29,10 +42,13 @@ const Header = () => {
       </div>
 
       <nav className="flex justify-between w-2/12 text-white ">
-        <div className="flex-col ">
-          <p className="text-xs font-semibold">Hello, Josh</p>
-          <p className="font-bold">Sign In</p>
-        </div>
+        <Link href={!user ? "/login" : ""}>
+          <div onClick={handleAuth} className="flex-col hover:cursor-pointer ">
+            <p className="text-xs font-semibold">Hello, Guest</p>
+            <p className="font-bold">{user ? "Sign Out" : "Sign In"}</p>
+          </div>
+        </Link>
+
         <div className="flex-col">
           <p className="text-xs font-semibold">Returns</p>
           <p className="font-bold">& Orders</p>

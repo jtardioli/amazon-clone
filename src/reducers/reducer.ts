@@ -1,15 +1,19 @@
 import { State } from "../contexts/StateProvider";
 import { Item } from "../ts/items";
 
+import { User } from "firebase/auth";
+
 export interface Action {
   type: ActionType;
   item?: Item;
   id?: number;
+  user: User | null;
 }
 
 export enum ActionType {
   ADD_TO_CART = "ADD_TO_CART",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
+  SET_USER = "SET_USER",
 }
 
 export const reducer = (state: State, action: Action) => {
@@ -30,7 +34,8 @@ export const reducer = (state: State, action: Action) => {
       }
       newCart.splice(index, 1);
       return { ...state, cart: newCart };
-
+    case ActionType.SET_USER:
+      return { ...state, user: action.user };
     default:
       return state;
   }
