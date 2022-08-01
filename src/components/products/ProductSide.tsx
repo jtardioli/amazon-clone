@@ -8,7 +8,7 @@ const ProductSide = ({ id, title, img, price, rating }: Item) => {
   const [_, dispatch] = useStateValue();
 
   const removeFromCart = () => {
-    dispatch({ type: ActionType.REMOVE_FROM_CART });
+    dispatch({ type: ActionType.REMOVE_FROM_CART, id });
   };
   return (
     <div className="flex w-full p-4 border-b-2 bg-red hover:cursor-pointer">
@@ -35,7 +35,10 @@ const ProductSide = ({ id, title, img, price, rating }: Item) => {
             })}
         </div>
 
-        <button className="bg-[#FEBD69] rounded-md w-[200px] py-1 mt-5">
+        <button
+          onClick={removeFromCart}
+          className="bg-[#FEBD69] rounded-md w-[200px] py-1 mt-5"
+        >
           Remove from Cart
         </button>
       </div>

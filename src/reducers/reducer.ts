@@ -4,7 +4,7 @@ import { Item } from "../ts/items";
 export interface Action {
   type: ActionType;
   item?: Item;
-  itemId?: number;
+  id?: number;
 }
 
 export enum ActionType {
@@ -20,11 +20,16 @@ export const reducer = (state: State, action: Action) => {
         cart: [...state.cart, action.item],
       };
     case ActionType.REMOVE_FROM_CART:
-      const index = state.cart.findIndex((item) => {
-        item.id = action.itemId;
-      });
-
-      let newCart = structuredClone(state.cart);
+      const index = state.cart.findIndex((item) => (item.id = action.id));
+      let newCart = [...state.cart];
+      if (index < 0) {
+        console.warn(
+          `Can't remove product (id: ${action.id}): as its not in the cart!`
+        );
+        return state;
+      }
+      newCart.splice(index, 1);
+      return { ...state, cart: newCart };
 
     default:
       return state;
