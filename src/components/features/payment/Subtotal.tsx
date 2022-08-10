@@ -1,3 +1,4 @@
+import Link from "next/link";
 import CurrencyFormat from "react-currency-format";
 import { useStateValue } from "../../../contexts/StateProvider";
 import { getCartTotal } from "../../../services/cartServices";
@@ -23,10 +24,11 @@ const Subtotal = () => {
         <input type="checkbox" className="mr-2 bg-white accent-slate-50" />
         This order contains a gift
       </div>
-
-      <button className="bg-[#FEBD69] rounded-md w-full py-1">
-        Proceed to Checkout
-      </button>
+      <Link href="/payment">
+        <button className="bg-[#FEBD69] rounded-md w-full py-1">
+          Proceed to Checkout
+        </button>
+      </Link>
     </div>
   );
 };

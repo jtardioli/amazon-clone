@@ -1,12 +1,12 @@
 import { NextPage } from "next";
 import Image from "next/image";
-import CheckoutAd from "../components/features/checkout/CheckoutAd";
-import Subtotal from "../components/features/checkout/Subtotal";
+import CheckoutAd from "../components/features/payment/CheckoutAd";
+import Subtotal from "../components/features/payment/Subtotal";
 import ProductSide from "../components/products/ProductSide";
 import { useStateValue } from "../contexts/StateProvider";
 
 const Checkout: NextPage = () => {
-  const [{ cart }] = useStateValue();
+  const [{ cart, user }] = useStateValue();
   return (
     <div className="flex flex-col items-center justify-start p-4 ">
       <CheckoutAd />

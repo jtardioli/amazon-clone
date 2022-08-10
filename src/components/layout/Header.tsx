@@ -5,9 +5,12 @@ import { AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
 import { useStateValue } from "../../contexts/StateProvider";
 import { auth } from "../../config/firebase.config";
 import { signOut } from "firebase/auth";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const [{ cart, user }] = useStateValue();
+  const router = useRouter();
+  console.log(router.pathname);
 
   const handleAuth = async () => {
     if (user) {
@@ -18,8 +21,12 @@ const Header = () => {
       }
     }
   };
+
   return (
-    <header className="bg-[#131921] h-16 w-full flex items-center justify-between  px-5">
+    <header
+      className="bg-[#131921] h-16 w-full flex items-center justify-between  px-5"
+      style={{ display: router.pathname === "/payment" ? "none" : "flex" }}
+    >
       <Link href="/">
         <div className="pt-3 hover:cursor-pointer">
           <Image
@@ -43,8 +50,13 @@ const Header = () => {
 
       <nav className="flex justify-between w-2/12 text-white ">
         <Link href={!user ? "/login" : ""}>
-          <div onClick={handleAuth} className="flex-col hover:cursor-pointer ">
-            <p className="text-xs font-semibold">Hello, Guest</p>
+          <div
+            onClick={handleAuth}
+            className="flex-col truncate hover:cursor-pointer max-w-[90px]"
+          >
+            <p className="text-xs font-semibold truncate">
+              Hello{user && `, ${user?.email}`}
+            </p>
             <p className="font-bold">{user ? "Sign Out" : "Sign In"}</p>
           </div>
         </Link>
