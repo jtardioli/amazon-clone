@@ -74,15 +74,21 @@ const Payment: NextPage = () => {
               <div className="text-sm max-w-[400px]">
                 <form onSubmit={handleSubmit}>
                   <CardElement onChange={handleChange} />
-                  <div>
-                    <CurrencyFormat
-                      value={getCartTotal(cart)}
-                      displayType={"text"}
-                      thousandSeparator={true}
-                      prefix={"$"}
-                      decimalScale={2}
-                    />
+                  <div className="flex text-lg text-[#B12705] py-4">
+                    <h3>
+                      Order Total:{" "}
+                      <CurrencyFormat
+                        value={getCartTotal(cart)}
+                        displayType={"text"}
+                        thousandSeparator={true}
+                        prefix={"$"}
+                        decimalScale={2}
+                      />
+                    </h3>
                   </div>
+                  <button className="bg-[#FEBD69] rounded-md w-full py-2 text-sm mb-1">
+                    Place your order
+                  </button>
                 </form>
               </div>
             </div>
