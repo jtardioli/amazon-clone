@@ -1,8 +1,11 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import axios from "axios";
 import { NextPage } from "next";
+import { useRouter } from "next/router";
 
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import CurrencyFormat from "react-currency-format";
+import { getCreatePaymentUrl } from "../api/amazon";
 
 import OrderSummary from "../components/features/payment/OrderSummary";
 import PaymentHeader from "../components/features/payment/PaymentHeader";
@@ -13,17 +16,43 @@ import { getCartTotal } from "../services/cartServices";
 const Payment: NextPage = () => {
   const [{ cart }] = useStateValue();
   const [error, setError] = useState(null);
-  const [disable, setDisable] = useState(true);
+  const [disabled, setDisabled] = useState(true);
+  const [processing, setProcessing] = useState(false);
+  const [succeeded, setSucceeded] = useState(false);
+  const [clientSecret, setClientSecret] = useState<string | null>(null);
+  const router = useRouter();
+
+  // When cart changes update stripe secret to change customer the correct amount
+  useEffect(() => {
+    (async () => {
+      const response = await axios.post(getCreatePaymentUrl(cart));
+      setClientSecret(response.data.clientSecret);
+    })();
+  }, [cart]);
 
   const stripe = useStripe();
   const elements = useElements();
 
-  const handleSubmit = (e) => {
-    // do stuff
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setProcessing(true);
+    const payload = await stripe
+      ?.confirmCardPayment(clientSecret!, {
+        payment_method: {
+          card: elements?.getElement(CardElement)!,
+        },
+      })
+      .then(({ paymentIntent }) => {
+        // aksdjfhaksdjhf
+        setSucceeded(true);
+        setError(null);
+        setProcessing(false);
+        router.replace("/orders");
+      });
   };
 
   const handleChange = (e: any) => {
-    setDisable(e.empty);
+    setDisabled(e.empty);
     setError(e.error ? e.error.message : "");
   };
   return (
@@ -86,9 +115,15 @@ const Payment: NextPage = () => {
                       />
                     </h3>
                   </div>
-                  <button className="bg-[#FEBD69] rounded-md w-full py-2 text-sm mb-1">
-                    Place your order
+                  <button
+                    disabled={processing || disabled || succeeded}
+                    className="bg-[#FEBD69] rounded-md w-full py-2 text-sm mb-1"
+                  >
+                    <span>
+                      {processing ? "Processing" : "Place your order"}
+                    </span>
                   </button>
+                  {error && <div>{error}</div>}
                 </form>
               </div>
             </div>
