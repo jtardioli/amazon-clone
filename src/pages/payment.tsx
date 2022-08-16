@@ -55,6 +55,8 @@ const Payment: NextPage = () => {
     setDisabled(e.empty);
     setError(e.error ? e.error.message : "");
   };
+
+  console.log("heyeyeyeye", clientSecret);
   return (
     <div className="w-full bg-white">
       <PaymentHeader />
