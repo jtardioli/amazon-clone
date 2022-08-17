@@ -3,7 +3,7 @@ import axios from "axios";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
+import React, { FormEvent, useEffect, useState } from "react";
 import CurrencyFormat from "react-currency-format";
 import { getCreatePaymentUrl } from "../api/amazon";
 
@@ -11,10 +11,11 @@ import OrderSummary from "../components/features/payment/OrderSummary";
 import PaymentHeader from "../components/features/payment/PaymentHeader";
 import ProductSide from "../components/products/ProductSide";
 import { useStateValue } from "../contexts/StateProvider";
+import { ActionType } from "../reducers/reducer";
 import { getCartTotal } from "../services/cartServices";
 
 const Payment: NextPage = () => {
-  const [{ cart }] = useStateValue();
+  const [{ cart }, dispatch] = useStateValue();
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -25,8 +26,13 @@ const Payment: NextPage = () => {
   // When cart changes update stripe secret to change customer the correct amount
   useEffect(() => {
     (async () => {
-      const response = await axios.post(getCreatePaymentUrl(cart));
-      setClientSecret(response.data.clientSecret);
+      try {
+        const response = await axios.post(getCreatePaymentUrl(cart));
+        console.log(response);
+        setClientSecret(response.data.clientSecret);
+      } catch (e) {
+        console.log("Unable to fetch client secret");
+      }
     })();
   }, [cart]);
 
@@ -47,6 +53,8 @@ const Payment: NextPage = () => {
         setSucceeded(true);
         setError(null);
         setProcessing(false);
+
+        dispatch({ type: ActionType.EMPTY_CART });
         router.replace("/orders");
       });
   };
@@ -56,7 +64,6 @@ const Payment: NextPage = () => {
     setError(e.error ? e.error.message : "");
   };
 
-  console.log("heyeyeyeye", clientSecret);
   return (
     <div className="w-full bg-white">
       <PaymentHeader />

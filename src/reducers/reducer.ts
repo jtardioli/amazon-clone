@@ -7,13 +7,14 @@ export interface Action {
   type: ActionType;
   item?: Item;
   id?: number;
-  user: User | null;
+  user?: User | null;
 }
 
 export enum ActionType {
   ADD_TO_CART = "ADD_TO_CART",
   REMOVE_FROM_CART = "REMOVE_FROM_CART",
   SET_USER = "SET_USER",
+  EMPTY_CART = "EMPTY_CART",
 }
 
 export const reducer = (state: State, action: Action) => {
@@ -36,6 +37,8 @@ export const reducer = (state: State, action: Action) => {
       return { ...state, cart: newCart };
     case ActionType.SET_USER:
       return { ...state, user: action.user };
+    case ActionType.EMPTY_CART:
+      return { ...state, cart: [] };
     default:
       return state;
   }

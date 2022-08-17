@@ -10,7 +10,6 @@ import { useRouter } from "next/router";
 const Header = () => {
   const [{ cart, user }] = useStateValue();
   const router = useRouter();
-  console.log(router.pathname);
 
   const handleAuth = async () => {
     if (user) {
