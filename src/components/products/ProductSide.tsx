@@ -3,8 +3,17 @@ import React from "react";
 import { ActionType } from "../../reducers/reducer";
 import { useStateValue } from "../../contexts/StateProvider";
 import { Item } from "../../ts/items";
+import { URL } from "../../ts/utils";
+interface Props {
+  id: number;
+  title: string;
+  img: URL;
+  price: number;
+  rating: number;
+  hideButton?: boolean;
+}
 
-const ProductSide = ({ id, title, img, price, rating }: Item) => {
+const ProductSide = ({ id, title, img, price, rating, hideButton }: Props) => {
   const [_, dispatch] = useStateValue();
 
   const removeFromCart = () => {
@@ -34,13 +43,14 @@ const ProductSide = ({ id, title, img, price, rating }: Item) => {
               return <p key={i}>⭐️</p>;
             })}
         </div>
-
-        <button
-          onClick={removeFromCart}
-          className="bg-[#FEBD69] rounded-md w-[200px] py-1 mt-5"
-        >
-          Remove from Cart
-        </button>
+        {!hideButton && (
+          <button
+            onClick={removeFromCart}
+            className="bg-[#FEBD69] rounded-md w-[200px] py-1 mt-5"
+          >
+            Remove from Cart
+          </button>
+        )}
       </div>
     </div>
   );

@@ -59,11 +59,13 @@ const Header = () => {
             <p className="font-bold">{user ? "Sign Out" : "Sign In"}</p>
           </div>
         </Link>
+        <Link href="/orders">
+          <div className="flex-col hover:cursor-pointer">
+            <p className="text-xs font-semibold">Returns</p>
+            <p className="font-bold">& Orders</p>
+          </div>
+        </Link>
 
-        <div className="flex-col">
-          <p className="text-xs font-semibold">Returns</p>
-          <p className="font-bold">& Orders</p>
-        </div>
         <div className="flex-col">
           <p className="text-xs font-semibold">Your</p>
           <p className="font-bold">Prime</p>

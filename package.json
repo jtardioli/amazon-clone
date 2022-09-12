@@ -1,6 +1,5 @@
 {
   "name": "amazon-clone",
- 
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -14,6 +13,7 @@
     "@stripe/stripe-js": "^1.35.0",
     "axios": "^0.27.2",
     "firebase": "^9.9.1",
+    "moment": "^2.29.4",
     "next": "12.2.3",
     "react": "18.2.0",
     "react-currency-format": "^1.1.0",

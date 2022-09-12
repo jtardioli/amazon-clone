@@ -10,11 +10,12 @@ import { useEffect, useState } from "react";
 
 import { db } from "../config/firebase.config";
 import { useStateValue } from "../contexts/StateProvider";
+import Order, { OrderInterface } from "../components/products/order";
 
 const Orders: NextPage = () => {
   const [{ cart, user }, dispatch] = useStateValue();
 
-  const [orders, setOrders] = useState<{ id: string; data: DocumentData }[]>(
+  const [orders, setOrders] = useState<{ id: string; data: OrderInterface }[]>(
     []
   );
 
@@ -24,12 +25,11 @@ const Orders: NextPage = () => {
       const q = query(ordersRef, orderBy("created", "desc"));
 
       onSnapshot(q, (snapshot) => {
-        setOrders(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            data: doc.data(),
-          }))
-        );
+        const snap = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          data: doc.data(),
+        }));
+        setOrders(snap as { id: string; data: OrderInterface }[]);
       });
     }
   }, []);
