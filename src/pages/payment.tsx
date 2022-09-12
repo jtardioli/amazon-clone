@@ -1,5 +1,6 @@
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import axios from "axios";
+import { addDoc, collection, doc, setDoc } from "firebase/firestore";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 
@@ -10,12 +11,13 @@ import { getCreatePaymentUrl } from "../api/amazon";
 import OrderSummary from "../components/features/payment/OrderSummary";
 import PaymentHeader from "../components/features/payment/PaymentHeader";
 import ProductSide from "../components/products/ProductSide";
+import { db } from "../config/firebase.config";
 import { useStateValue } from "../contexts/StateProvider";
 import { ActionType } from "../reducers/reducer";
 import { getCartTotal } from "../services/cartServices";
 
 const Payment: NextPage = () => {
-  const [{ cart }, dispatch] = useStateValue();
+  const [{ cart, user }, dispatch] = useStateValue();
   const [error, setError] = useState(null);
   const [disabled, setDisabled] = useState(true);
   const [processing, setProcessing] = useState(false);
@@ -48,8 +50,21 @@ const Payment: NextPage = () => {
           card: elements?.getElement(CardElement)!,
         },
       })
-      .then(({ paymentIntent }) => {
-        // aksdjfhaksdjhf
+      .then(async ({ paymentIntent }) => {
+        try {
+          const docRef = doc(
+            db,
+            `users/${user?.uid}/orders/${paymentIntent?.id}`
+          );
+          await setDoc(docRef, {
+            cart: cart,
+            amount: paymentIntent?.amount,
+            created: paymentIntent?.created,
+          });
+        } catch (e) {
+          console.error("Error adding document: ", e);
+        }
+
         setSucceeded(true);
         setError(null);
         setProcessing(false);
