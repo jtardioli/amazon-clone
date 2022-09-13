@@ -9,8 +9,8 @@ This is a full stack ecommerce amazon clone. Users can log in and add orders to 
 
 
 ## Stack
-Next.js
-Typescript
-Tailwind Css
-Stripe.js
-Firebase
+- Next.js
+- Typescript
+- Tailwind Css
+- Stripe.js
+- Firebase
