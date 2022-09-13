@@ -29,9 +29,11 @@ const Payment: NextPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        const response = await axios.post(getCreatePaymentUrl(cart));
-        console.log(response);
-        setClientSecret(response.data.clientSecret);
+        if (!succeeded) {
+          const response = await axios.post(getCreatePaymentUrl(cart));
+          console.log(response);
+          setClientSecret(response.data.clientSecret);
+        }
       } catch (e) {
         console.log("Unable to fetch client secret");
       }

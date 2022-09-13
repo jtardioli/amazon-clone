@@ -1,6 +1,8 @@
 import moment from "moment";
+import { userAgent } from "next/server";
 import React from "react";
 import CurrencyFormat from "react-currency-format";
+import { useStateValue } from "../../contexts/StateProvider";
 import { Item } from "../../ts/items";
 import ProductSide from "./ProductSide";
 
@@ -16,15 +18,38 @@ interface Props {
   };
 }
 
-const order = ({ order }: Props) => {
+const Order = ({ order }: Props) => {
+  const [{ user }, dispatch] = useStateValue();
   const { created, cart, amount } = order.data;
   return (
-    <div>
-      <h2>Order</h2>
-      <p>{moment.unix(created).format("MMMM do YYYY, h:mma")}</p>
-      <p>
-        <small>{order.id}</small>
-      </p>
+    <div className="flex flex-col mb-2 bg-white border-2 rounded-lg">
+      <header className="text-[#565959] flex flex-row justify-between bg-[#EFF2F2] p-3">
+        <div className="flex flex-row justify-between w-[55%] text-xs">
+          <div className="flex flex-col">
+            <p className="uppercase ">Order Placed</p>
+            <p className="text-sm ">
+              {moment.unix(created).format("MMMM DD, YYYY")}
+            </p>
+          </div>
+          <div>
+            <p className="uppercase">Total</p>
+            <p className="text-[0.9rem] ">
+              <CurrencyFormat
+                value={amount / 100}
+                displayType={"text"}
+                thousandSeparator={true}
+                prefix={"USD$ "}
+                decimalScale={2}
+              />
+            </p>
+          </div>
+          <div>
+            <p className="uppercase">Ship To</p>
+            <p className="text-[0.9rem]">{user?.email}</p>
+          </div>
+        </div>
+        <p className="text-[0.9rem]">Order # {order.id}</p>
+      </header>
       {cart.map((item) => (
         <ProductSide
           key={item.id}
@@ -36,15 +61,8 @@ const order = ({ order }: Props) => {
           hideButton
         />
       ))}
-      <CurrencyFormat
-        value={amount}
-        displayType={"text"}
-        thousandSeparator={true}
-        prefix={"$"}
-        decimalScale={2}
-      />
     </div>
   );
 };
 
-export default order;
+export default Order;

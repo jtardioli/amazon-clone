@@ -47,7 +47,7 @@ const Header = () => {
         </button>
       </div>
 
-      <nav className="flex justify-between w-2/12 text-white ">
+      <nav className="flex justify-around w-2/12 text-white ">
         <Link href={!user ? "/login" : ""}>
           <div
             onClick={handleAuth}
@@ -65,11 +65,6 @@ const Header = () => {
             <p className="font-bold">& Orders</p>
           </div>
         </Link>
-
-        <div className="flex-col">
-          <p className="text-xs font-semibold">Your</p>
-          <p className="font-bold">Prime</p>
-        </div>
       </nav>
       <Link href="/checkout">
         <div className="flex items-center justify-center text-white hover:cursor-pointer">

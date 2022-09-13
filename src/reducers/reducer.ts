@@ -2,6 +2,7 @@ import { State } from "../contexts/StateProvider";
 import { Item } from "../ts/items";
 
 import { User } from "firebase/auth";
+import { stat } from "fs";
 
 export interface Action {
   type: ActionType;
@@ -20,12 +21,13 @@ export enum ActionType {
 export const reducer = (state: State, action: Action) => {
   switch (action.type) {
     case ActionType.ADD_TO_CART:
+      if (!action.item) break;
       return {
         ...state,
         cart: [...state.cart, action.item],
       };
     case ActionType.REMOVE_FROM_CART:
-      const index = state.cart.findIndex((item) => (item.id = action.id));
+      const index = state.cart.findIndex((item) => item.id === action.id);
       let newCart = [...state.cart];
       if (index < 0) {
         console.warn(
@@ -42,4 +44,5 @@ export const reducer = (state: State, action: Action) => {
     default:
       return state;
   }
+  return state;
 };

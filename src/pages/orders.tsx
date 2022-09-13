@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 
 import { db } from "../config/firebase.config";
 import { useStateValue } from "../contexts/StateProvider";
-import Order, { OrderInterface } from "../components/products/order";
+import Order, { OrderInterface } from "../components/products/Order";
 
 const Orders: NextPage = () => {
   const [{ cart, user }, dispatch] = useStateValue();
@@ -33,10 +33,10 @@ const Orders: NextPage = () => {
       });
     }
   }, []);
-  console.log(orders);
+
   return (
-    <main>
-      <div>Your Orders</div>
+    <main className="flex flex-col py-6 bg-white px-44">
+      <p className="relative mb-4 text-3xl">Your Orders</p>
       {orders.map((order) => (
         <Order key={order.id} order={order} />
       ))}

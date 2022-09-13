@@ -13,8 +13,8 @@ import { Action, ActionType } from "../reducers/reducer";
 import { Item } from "../ts/items";
 
 export interface State {
-  cart: any[];
-  user: User | null;
+  cart: Item[];
+  user: User | undefined | null;
 }
 
 export const StateContext = createContext<[State, Dispatch<Action>]>(
@@ -30,7 +30,7 @@ export const StateProvider = ({
 }) => {
   const initialState = {
     cart: [],
-    user: null,
+    user: undefined,
   };
 
   const [state, dispatch] = useReducer(reducer, initialState);
