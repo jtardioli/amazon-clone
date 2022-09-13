@@ -1,34 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+#Amazon Clone
 
-## Getting Started
+This is a full stack ecommerce amazon clone. Users can log in and add orders to their carts then proceed to checkout. Payments are wired through Stripe.js to take USD. If the payment is successful the order is added to firestore so users can view it again from the orders page.
 
-First, run the development server:
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+![image](https://user-images.githubusercontent.com/85530348/189785496-e83b52ab-4129-47db-8b8e-b01b258753f1.png)
+![image](https://user-images.githubusercontent.com/85530348/189786111-e5362c1e-d729-4f18-912b-cd838b7b14b5.png)
+![image](https://user-images.githubusercontent.com/85530348/189786162-53a4377a-d369-4610-a618-46dafdb33e04.png)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+##Stack
+Next.js
+Tailwind Css
+Stripe.js
+Firebase
