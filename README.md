@@ -1,4 +1,4 @@
-#Amazon Clone
+# Amazon Clone
 
 This is a full stack ecommerce amazon clone. Users can log in and add orders to their carts then proceed to checkout. Payments are wired through Stripe.js to take USD. If the payment is successful the order is added to firestore so users can view it again from the orders page.
 
@@ -8,8 +8,9 @@ This is a full stack ecommerce amazon clone. Users can log in and add orders to 
 ![image](https://user-images.githubusercontent.com/85530348/189786162-53a4377a-d369-4610-a618-46dafdb33e04.png)
 
 
-##Stack
+## Stack
 Next.js
+Typescript
 Tailwind Css
 Stripe.js
 Firebase
